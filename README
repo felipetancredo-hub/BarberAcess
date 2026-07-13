@@ -1,0 +1,35 @@
+# BarberAcess
+
+Sistema de agendamento inclusivo para barbearias.
+
+## Objetivo
+
+Criar uma aplicação que permita ao cliente consultar serviços,
+valores, datas, horários e informar necessidades de acessibilidade.
+
+## Funcionalidades da primeira versão
+
+- Exibição dos serviços
+- Exibição dos valores
+- Formulário de agendamento
+- Seleção de data e horário
+- Campo de acessibilidade
+- Campo de observações
+- Confirmação simples do agendamento
+
+## Tecnologias
+
+- HTML
+- CSS
+- JavaScript
+- Git
+- GitHub
+
+## Próximas etapas
+
+- Salvar os agendamentos
+- Impedir horários duplicados
+- Criar painel do estabelecimento
+- Editar e cancelar agendamentos
+- Adicionar status do atendimento
+- Melhorar os recursos de acessibilidade

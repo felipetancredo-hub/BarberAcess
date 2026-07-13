@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BarberAcess</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="cabecalho">
+        <div class="container">
+            <h1>BarberAcess</h1>
+
+            <p>
+                Agendamento simples, organizado e acessível.
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="apresentacao">
+            <h2>Agende seu atendimento</h2>
+
+            <p>
+                Escolha o serviço, a data e o horário desejado.
+            </p>
+        </section>
+
+        <section class="servicos">
+            <h2>Serviços</h2>
+
+            <div class="lista-servicos">
+                <article class="card-servico">
+                    <h3>Corte de cabelo</h3>
+                    <p>Atendimento tradicional ou personalizado.</p>
+                   
+                </article>
+
+                <article class="card-servico">
+                    <h3>Barba</h3>
+                    <p>Modelagem e acabamento da barba.</p>
+                    
+                </article>
+
+                <article class="card-servico">
+                    <h3>Corte e barba</h3>
+                    <p>Serviço completo.</p>
+                    
+                </article>
+            </div>
+        </section>
+
+        <section class="agendamento">
+            <h2>Novo agendamento</h2>
+
+            <form id="form-agendamento">
+                <label for="nome">Nome do cliente</label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Digite seu nome"
+                    required
+                >
+
+                <label for="servico">Serviço</label>
+
+               <select id="servico" required>
+    <option value="">Selecione</option>
+    <option value="Corte de cabelo">Corte de cabelo</option>
+    <option value="Barba">Barba</option>
+    <option value="Corte e barba">Corte e barba</option>
+</select>
+                </select>
+
+                <label for="data">Data</label>
+
+                <input
+                    type="date"
+                    id="data"
+                    required
+                >
+
+                <label for="horario">Horário</label>
+
+                <input
+                    type="time"
+                    id="horario"
+                    required
+                >
+
+                <label for="acessibilidade">
+                    Necessidade de acessibilidade
+                </label>
+
+                <select id="acessibilidade">
+                    <option value="Nenhuma">
+                        Nenhuma necessidade informada
+                    </option>
+
+                    <option value="Acesso para cadeira de rodas">
+                        Acesso para cadeira de rodas
+                    </option>
+
+                    <option value="Ambiente com menos ruído">
+                        Ambiente com menos ruído
+                    </option>
+
+                    <option value="Apoio para comunicação">
+                        Apoio para comunicação
+                    </option>
+
+                    <option value="Tempo adicional de atendimento">
+                        Tempo adicional de atendimento
+                    </option>
+
+                    <option value="Outra necessidade">
+                        Outra necessidade
+                    </option>
+                </select>
+
+                <label for="observacoes">Observações</label>
+
+                <textarea
+                    id="observacoes"
+                    rows="4"
+                    placeholder="Informe algo importante para o atendimento"
+                ></textarea>
+
+                <button type="submit">
+                    Solicitar agendamento
+                </button>
+            </form>
+
+            <p id="mensagem"></p>
+        <p id="mensagem"></p>
+
+<section class="lista-agendamentos">
+    <h2>Agendamentos realizados</h2>
+
+    <div id="agendamentos"></div>
+</section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

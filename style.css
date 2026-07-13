@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.cabecalho {
+    padding: 35px 0;
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+}
+
+.cabecalho h1 {
+    margin-bottom: 8px;
+}
+
+.apresentacao,
+.servicos,
+.agendamento {
+    margin: 30px 0;
+}
+
+.lista-servicos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card-servico {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-servico strong {
+    display: block;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.agendamento {
+    padding: 25px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input,
+select,
+textarea,
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+input,
+select,
+textarea {
+    border: 1px solid #aaa;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    margin-top: 10px;
+    border: none;
+    background-color: #1f1f1f;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+#mensagem {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .lista-servicos {
+        grid-template-columns: 1fr;
+    }
+}
+
+.mensagem {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.sucesso {
+    background-color: #dff0d8;
+    color: #255625;
+}
+
+.erro {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.lista-agendamentos {
+    margin-top: 30px;
+}
+
+#agendamentos {
+    display: grid;
+    gap: 15px;
+}
+
+.card-agendamento {
+    padding: 18px;
+    background-color: #f5f5f5;
+    border-left: 5px solid #1f1f1f;
+    border-radius: 8px;
+}
+
+.card-agendamento h3 {
+    margin-top: 0;
+}
+
+.card-agendamento p {
+    margin: 8px 0;
+}
+.botao-cancelar {
+    width: auto;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botao-cancelar:hover {
+    opacity: 0.85;
+}
