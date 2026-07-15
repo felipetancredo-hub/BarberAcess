@@ -160,3 +160,7 @@ button:hover {
 .botao-cancelar:hover {
     opacity: 0.85;
 }
+select option:disabled {
+    color: #888;
+    background-color: #e5e5e5;
+}

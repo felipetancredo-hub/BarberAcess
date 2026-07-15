@@ -2,21 +2,85 @@ const formulario = document.querySelector("#form-agendamento");
 const mensagem = document.querySelector("#mensagem");
 const areaAgendamentos = document.querySelector("#agendamentos");
 const totalAgendamentos = document.querySelector("#total-agendamentos");
-const totalPendentes = document.querySelector("#total-pendentes");
+const totalAusentes = document.querySelector("#total-ausentes");
 const totalConfirmados = document.querySelector("#total-confirmados");
 const totalConcluidos = document.querySelector("#total-concluidos");
+const campoData = document.querySelector("#data");
+const campoHorario = document.querySelector("#horario");
+const dataAtual = new Date();
+
+const anoAtual = dataAtual.getFullYear();
+const mesAtual = String(dataAtual.getMonth() + 1).padStart(2, "0");
+const diaAtual = String(dataAtual.getDate()).padStart(2, "0");
+
+const hoje = `${anoAtual}-${mesAtual}-${diaAtual}`;
+
+campoData.min = hoje;
 
 let agendamentos = carregarAgendamentos();
+function atualizarHorariosDisponiveis() {
+    const dataSelecionada = campoData.value;
+    const opcoesHorario = campoHorario.querySelectorAll("option");
+    const agora = new Date();
 
+    opcoesHorario.forEach(function (opcao) {
+        if (opcao.value === "") {
+            return;
+        }
+
+        const horarioOcupado = agendamentos.some(function (agendamento) {
+            return (
+                agendamento.data === dataSelecionada &&
+                agendamento.horario === opcao.value
+            );
+        });
+
+        const dataEHorarioDaOpcao = new Date(
+            `${dataSelecionada}T${opcao.value}:00`
+        );
+
+        const horarioJaPassou =
+            dataSelecionada !== "" &&
+            dataEHorarioDaOpcao <= agora;
+
+        const indisponivel = horarioOcupado || horarioJaPassou;
+
+        opcao.disabled = indisponivel;
+
+        if (horarioOcupado) {
+            opcao.textContent = `${opcao.value} — ocupado`;
+        } else if (horarioJaPassou) {
+            opcao.textContent = `${opcao.value} — horário encerrado`;
+        } else {
+            opcao.textContent = opcao.value;
+        }
+    });
+
+    campoHorario.value = "";
+}
 mostrarAgendamentos();
-
+campoData.addEventListener("change", atualizarHorariosDisponiveis);
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
 
     const nome = document.querySelector("#nome").value.trim();
     const servico = document.querySelector("#servico").value;
     const data = document.querySelector("#data").value;
-    const horario = document.querySelector("#horario").value;
+const horario = document.querySelector("#horario").value;
+
+const dataEHorarioSelecionados = new Date(
+    `${data}T${horario}:00`
+);
+
+const agora = new Date();
+
+if (dataEHorarioSelecionados <= agora) {
+    mensagem.textContent =
+        "Não é possível realizar agendamentos em datas ou horários que já passaram.";
+
+    mensagem.className = "mensagem erro";
+    return;
+}
     const acessibilidade =
         document.querySelector("#acessibilidade").value;
     const observacoes =
@@ -45,7 +109,7 @@ formulario.addEventListener("submit", function (evento) {
         horario: horario,
         acessibilidade: acessibilidade,
         observacoes: observacoes,
-        status: "Pendente"
+        status: "Confirmado"
     
 };
 
@@ -66,6 +130,7 @@ formulario.addEventListener("submit", function (evento) {
 function mostrarAgendamentos() {
     areaAgendamentos.innerHTML = "";
     atualizarIndicadores();
+    atualizarHorariosDisponiveis();
 
     if (agendamentos.length === 0) {
         areaAgendamentos.innerHTML =
@@ -99,7 +164,7 @@ function mostrarAgendamentos() {
         <p>
     <strong>Status:</strong>
     <span class="status-agendamento">
-        ${agendamento.status || "Pendente"}
+        ${agendamento.status || "Confirmado"}
     </span>
 </p>
 
@@ -124,10 +189,10 @@ function mostrarAgendamentos() {
 
     <button
         type="button"
-        class="botao-confirmar"
+        class="botao-ausente"
         data-id="${agendamento.id}"
     >
-        Confirmar
+       Marcar como ausente
     </button>
 
     <button
@@ -149,15 +214,15 @@ function mostrarAgendamentos() {
 `;
         areaAgendamentos.appendChild(card);
 const botaoCancelar = card.querySelector(".botao-cancelar");
-const botaoConfirmar = card.querySelector(".botao-confirmar");
+const botaoAusente = card.querySelector(".botao-ausente");
 const botaoConcluir = card.querySelector(".botao-concluir");
 
 botaoCancelar.addEventListener("click", function () {
     cancelarAgendamento(agendamento.id);
 });
 
-botaoConfirmar.addEventListener("click", function () {
-    alterarStatus(agendamento.id, "Confirmado");
+botaoAusente.addEventListener("click", function () {
+    alterarStatus(agendamento.id, "Ausente");
 });
 
 botaoConcluir.addEventListener("click", function () {
@@ -167,22 +232,22 @@ botaoConcluir.addEventListener("click", function () {
     });
 }
 function atualizarIndicadores() {
-    const pendentes = agendamentos.filter(function (agendamento) {
-        return (agendamento.status || "Pendente") === "Pendente";
-    });
-
     const confirmados = agendamentos.filter(function (agendamento) {
-        return agendamento.status === "Confirmado";
+        return (agendamento.status || "Confirmado") === "Confirmado";
     });
 
     const concluidos = agendamentos.filter(function (agendamento) {
         return agendamento.status === "Concluído";
     });
 
+    const ausentes = agendamentos.filter(function (agendamento) {
+        return agendamento.status === "Ausente";
+    });
+
     totalAgendamentos.textContent = agendamentos.length;
-    totalPendentes.textContent = pendentes.length;
     totalConfirmados.textContent = confirmados.length;
     totalConcluidos.textContent = concluidos.length;
+    totalAusentes.textContent = ausentes.length;
 }
 function alterarStatus(id, novoStatus) {
     agendamentos = agendamentos.map(function (agendamento) {
@@ -247,6 +312,7 @@ function carregarAgendamentos() {
         console.error("Erro ao carregar agendamentos:", erro);
         return [];
     }
+
 }
 
 function formatarData(data) {
