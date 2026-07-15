@@ -1,6 +1,10 @@
 const formulario = document.querySelector("#form-agendamento");
 const mensagem = document.querySelector("#mensagem");
 const areaAgendamentos = document.querySelector("#agendamentos");
+const totalAgendamentos = document.querySelector("#total-agendamentos");
+const totalPendentes = document.querySelector("#total-pendentes");
+const totalConfirmados = document.querySelector("#total-confirmados");
+const totalConcluidos = document.querySelector("#total-concluidos");
 
 let agendamentos = carregarAgendamentos();
 
@@ -61,6 +65,7 @@ formulario.addEventListener("submit", function (evento) {
 
 function mostrarAgendamentos() {
     areaAgendamentos.innerHTML = "";
+    atualizarIndicadores();
 
     if (agendamentos.length === 0) {
         areaAgendamentos.innerHTML =
@@ -161,7 +166,24 @@ botaoConcluir.addEventListener("click", function () {
 
     });
 }
+function atualizarIndicadores() {
+    const pendentes = agendamentos.filter(function (agendamento) {
+        return (agendamento.status || "Pendente") === "Pendente";
+    });
 
+    const confirmados = agendamentos.filter(function (agendamento) {
+        return agendamento.status === "Confirmado";
+    });
+
+    const concluidos = agendamentos.filter(function (agendamento) {
+        return agendamento.status === "Concluído";
+    });
+
+    totalAgendamentos.textContent = agendamentos.length;
+    totalPendentes.textContent = pendentes.length;
+    totalConfirmados.textContent = confirmados.length;
+    totalConcluidos.textContent = concluidos.length;
+}
 function alterarStatus(id, novoStatus) {
     agendamentos = agendamentos.map(function (agendamento) {
         if (agendamento.id === id) {
