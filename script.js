@@ -323,6 +323,14 @@ function carregarAgendamentos() {
 }
 function mostrarAgendaEstabelecimento() {
     agendaEstabelecimento.innerHTML = "";
+const agendamentosOrdenados = [...agendamentos];
+
+agendamentosOrdenados.sort(function (a, b) {
+    const dataHoraA = new Date(`${a.data}T${a.horario}`);
+    const dataHoraB = new Date(`${b.data}T${b.horario}`);
+
+    return dataHoraA - dataHoraB;
+});
 
     if (agendamentos.length === 0) {
         agendaEstabelecimento.innerHTML =
@@ -330,7 +338,7 @@ function mostrarAgendaEstabelecimento() {
         return;
     }
 
-    agendamentos.forEach(function (agendamento) {
+    agendamentosOrdenados.forEach(function (agendamento) {
         const item = document.createElement("div");
 
         item.innerHTML = `
