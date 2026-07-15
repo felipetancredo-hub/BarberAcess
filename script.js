@@ -2,6 +2,9 @@ const formulario = document.querySelector("#form-agendamento");
 const mensagem = document.querySelector("#mensagem");
 const areaAgendamentos = document.querySelector("#agendamentos");
 const totalAgendamentos = document.querySelector("#total-agendamentos");
+const agendaEstabelecimento = document.querySelector(
+    "#agenda-estabelecimento"
+);
 const totalAusentes = document.querySelector("#total-ausentes");
 const totalConfirmados = document.querySelector("#total-confirmados");
 const totalConcluidos = document.querySelector("#total-concluidos");
@@ -59,6 +62,7 @@ function atualizarHorariosDisponiveis() {
     campoHorario.value = "";
 }
 mostrarAgendamentos();
+mostrarAgendaEstabelecimento();
 campoData.addEventListener("change", atualizarHorariosDisponiveis);
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -117,6 +121,7 @@ if (dataEHorarioSelecionados <= agora) {
 
     salvarAgendamentos();
     mostrarAgendamentos();
+    mostrarAgendaEstabelecimento();
 
     mensagem.textContent =
         `Agendamento confirmado para ${nome}: ${servico}, ` +
@@ -261,11 +266,12 @@ function alterarStatus(id, novoStatus) {
         return agendamento;
     });
 
-    salvarAgendamentos();
-    mostrarAgendamentos();
+salvarAgendamentos();
+mostrarAgendamentos();
+mostrarAgendaEstabelecimento();
 
-    mensagem.textContent =
-        `Status alterado para ${novoStatus}.`;
+mensagem.textContent =
+    `Status alterado para ${novoStatus}.`;
 
     mensagem.className = "mensagem sucesso";
 }
@@ -285,6 +291,7 @@ function cancelarAgendamento(id) {
 
     salvarAgendamentos();
     mostrarAgendamentos();
+    mostrarAgendaEstabelecimento();
 
     mensagem.textContent =
         "Agendamento cancelado com sucesso.";
@@ -314,7 +321,30 @@ function carregarAgendamentos() {
     }
 
 }
+function mostrarAgendaEstabelecimento() {
+    agendaEstabelecimento.innerHTML = "";
 
+    if (agendamentos.length === 0) {
+        agendaEstabelecimento.innerHTML =
+            "<p>Nenhum agendamento encontrado.</p>";
+        return;
+    }
+
+    agendamentos.forEach(function (agendamento) {
+        const item = document.createElement("div");
+
+        item.innerHTML = `
+            <p>
+                <strong>${formatarData(agendamento.data)}</strong>
+                - ${agendamento.horario}
+                - ${agendamento.nome}
+                - ${agendamento.status}
+            </p>
+        `;
+
+        agendaEstabelecimento.appendChild(item);
+    });
+}
 function formatarData(data) {
     const partes = data.split("-");
 
