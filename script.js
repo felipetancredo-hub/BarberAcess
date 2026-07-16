@@ -354,11 +354,21 @@ const tituloData = document.createElement("h3");
 }
 const item = document.createElement("div");
 
+let iconeStatus = "";
+
+if (agendamento.status === "Confirmado") {
+    iconeStatus = "🟢";
+} else if (agendamento.status === "Concluído") {
+    iconeStatus = "🔵";
+} else if (agendamento.status === "Ausente") {
+    iconeStatus = "🔴";
+}
+
 item.innerHTML = `
     <p>
         ${agendamento.horario}
         - ${agendamento.nome}
-        - ${agendamento.status}
+        - ${iconeStatus} ${agendamento.status}
     </p>
 `;
 
