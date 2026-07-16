@@ -338,21 +338,35 @@ agendamentosOrdenados.sort(function (a, b) {
         return;
     }
 
-    agendamentosOrdenados.forEach(function (agendamento) {
-        const item = document.createElement("div");
+    let dataAtualAgenda = "";
 
-        item.innerHTML = `
-            <p>
-                <strong>${formatarData(agendamento.data)}</strong>
-                - ${agendamento.horario}
-                - ${agendamento.nome}
-                - ${agendamento.status}
-            </p>
-        `;
+agendamentosOrdenados.forEach(function (agendamento) {
+    if (agendamento.data !== dataAtualAgenda) {
+        
+const tituloData = document.createElement("h3");
 
-        agendaEstabelecimento.appendChild(item);
-    });
+        tituloData.textContent =
+            `📅 ${formatarData(agendamento.data)}`;
+
+        agendaEstabelecimento.appendChild(tituloData);
+
+        dataAtualAgenda = agendamento.data;
 }
+const item = document.createElement("div");
+
+item.innerHTML = `
+    <p>
+        ${agendamento.horario}
+        - ${agendamento.nome}
+        - ${agendamento.status}
+    </p>
+`;
+
+agendaEstabelecimento.appendChild(item);
+
+});
+}
+
 function formatarData(data) {
     const partes = data.split("-");
 
