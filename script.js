@@ -197,7 +197,7 @@ function mostrarAgendamentos() {
         class="botao-ausente"
         data-id="${agendamento.id}"
     >
-       Marcar como ausente
+          Ausente
     </button>
 
     <button
@@ -205,17 +205,18 @@ function mostrarAgendamentos() {
         class="botao-concluir"
         data-id="${agendamento.id}"
     >
-        Concluir
+          Concluir
     </button>
 
 </div>
-    <button
-        type="button"
-        class="botao-cancelar"
-        data-id="${agendamento.id}"
-    >
-        Cancelar agendamento
-    </button>
+
+<button
+    type="button"
+    class="botao-cancelar"
+    data-id="${agendamento.id}"
+>
+      Cancelar
+</button>
 `;
         areaAgendamentos.appendChild(card);
 const botaoCancelar = card.querySelector(".botao-cancelar");
