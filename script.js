@@ -1,4 +1,8 @@
 import {
+    adicionarPerfilProfissional,
+    buscarPerfisProfissionais
+} from "./perfilProfissionalService.js";
+import {
     adicionarAgendamento,
     buscarAgendamentos,
     atualizarStatusAgendamento,
@@ -17,6 +21,7 @@ const campoData = document.querySelector("#data");
 const campoHorario = document.querySelector("#horario");
 
 let agendamentos = [];
+let perfilAtual = null;
 
 configurarDataMinima();
 iniciarAplicacao();
@@ -60,14 +65,17 @@ formulario.addEventListener("submit", async function (evento) {
     }
 
     const novoAgendamento = {
-        nome,
-        servico,
-        data,
-        horario,
-        acessibilidade,
-        observacoes,
-        status: "Confirmado"
-    };
+    perfilId: perfilAtual.id,
+    profissionalId: null,
+    nome,
+    servico,
+    data,
+    horario,
+    acessibilidade,
+    observacoes,
+    status: "Confirmado",
+    dataCriacao: new Date().toISOString()
+};
 
     try {
         const idFirebase = await adicionarAgendamento(novoAgendamento);
@@ -98,14 +106,23 @@ formulario.addEventListener("submit", async function (evento) {
 
 async function iniciarAplicacao() {
     try {
-        exibirMensagem("Carregando agendamentos...", "");
+        exibirMensagem("Carregando dados...", "");
 
-        agendamentos = await buscarAgendamentos();
+        await carregarPerfilProfissional();
+
+        const todosAgendamentos = await buscarAgendamentos();
+
+        agendamentos = todosAgendamentos.filter(function (agendamento) {
+            return (
+                agendamento.perfilId === perfilAtual.id ||
+                !agendamento.perfilId
+            );
+        });
 
         atualizarInterface();
         limparMensagem();
     } catch (erro) {
-        console.error("Erro ao buscar agendamentos no Firebase:", erro);
+        console.error("Erro ao iniciar a aplicação:", erro);
 
         agendamentos = [];
         atualizarInterface();
@@ -115,6 +132,34 @@ async function iniciarAplicacao() {
             "erro"
         );
     }
+}
+
+async function carregarPerfilProfissional() {
+    const perfisEncontrados = await buscarPerfisProfissionais();
+
+    if (perfisEncontrados.length > 0) {
+        perfilAtual = perfisEncontrados[0];
+        return;
+    }
+
+    const perfilInicial = {
+        nome: "BarberAcess",
+        descricao: "Perfil profissional inicial",
+        telefone: "",
+        endereco: "",
+        instagram: "",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    };
+
+    const idPerfil = await adicionarPerfilProfissional(perfilInicial);
+
+    perfilAtual = {
+        id: idPerfil,
+        ...perfilInicial
+    };
+
+    console.log("Perfil profissional criado:", perfilAtual);
 }
 
 function configurarDataMinima() {

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Painel Profissional | BarberAcess</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <div class="container">
+            <h1>BarberAcess</h1>
+            <p>Painel do Perfil Profissional</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="apresentacao">
+            <h2>Dados do perfil profissional</h2>
+
+            <p>
+                Preencha as informações pelas quais deseja ser encontrado.
+            </p>
+        </section>
+
+        <section class="agendamento">
+
+            <form id="form-perfil-profissional">
+
+                <label for="nome-perfil">Nome do perfil</label>
+
+                <input
+                    type="text"
+                    id="nome-perfil"
+                    placeholder="Ex.: Barbearia Central ou Felipe Tancredo"
+                    required
+                >
+
+                <label for="telefone-perfil">Telefone</label>
+
+                <input
+                    type="tel"
+                    id="telefone-perfil"
+                    placeholder="Ex.: (11) 99999-9999"
+                >
+
+                <label for="instagram-perfil">Instagram</label>
+
+                <input
+                    type="text"
+                    id="instagram-perfil"
+                    placeholder="Ex.: @barbeariacentral"
+                >
+
+                <label for="endereco-perfil">Endereço</label>
+
+                <input
+                    type="text"
+                    id="endereco-perfil"
+                    placeholder="Digite o endereço"
+                >
+
+                <label for="descricao-perfil">Descrição</label>
+
+                <textarea
+                    id="descricao-perfil"
+                    rows="4"
+                    placeholder="Conte um pouco sobre o atendimento"
+                ></textarea>
+
+                <button type="submit">
+                    Salvar perfil
+                </button>
+
+            </form>
+
+            <p id="mensagem-perfil"></p>
+
+        </section>
+
+        <section class="lista-agendamentos">
+
+            <h2>Perfil salvo</h2>
+
+            <div id="resumo-perfil">
+                <p>Nenhum perfil carregado.</p>
+            </div>
+
+        </section>
+
+        <section class="profissionais">
+
+            <h2>Profissionais</h2>
+
+            <form id="form-profissional">
+
+                <label for="nome-profissional">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome-profissional"
+                    required
+                >
+
+                <label for="especialidade-profissional">
+                    Especialidade
+                </label>
+
+                <input
+                    type="text"
+                    id="especialidade-profissional"
+                >
+
+                <button type="submit">
+                    Adicionar profissional
+                </button>
+
+            </form>
+
+            <div id="lista-profissionais">
+                <p>Nenhum profissional cadastrado.</p>
+            </div>
+
+        </section>
+
+        <section class="servicos">
+
+            <h2>Serviços</h2>
+
+            <form id="form-servico">
+
+                <select id="profissional-servico">
+                    <option value="">
+                        Selecione um profissional
+                    </option>
+                </select>
+
+                <input
+                    id="nome-servico"
+                    type="text"
+                    placeholder="Nome do serviço"
+                    required
+                >
+
+                <input
+                    id="valor-servico"
+                    type="number"
+                    placeholder="Valor"
+                    required
+                >
+
+                <button type="submit">
+                    Adicionar serviço
+                </button>
+
+            </form>
+
+            <div id="lista-servicos"></div>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="./painel.js"></script>
+
+</body>
+</html>
